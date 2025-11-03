@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Справочник организаций (TS Vanilla)</title>
+  <style>
+    :root {--gap:12px; --radius:12px; --border:#e5e7eb; --muted:#6b7280;}
+    body {font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu; margin:0; color:#111827;}
+    .container {max-width:1100px; margin:24px auto; padding:0 16px;}
+    .toolbar {display:flex; gap:var(--gap); align-items:center; margin-bottom:16px;}
+    .btn {padding:10px 14px; border:1px solid var(--border); border-radius:var(--radius); background:white; cursor:pointer;}
+    .btn.primary {background:#111827; color:white; border-color:#111827;}
+    .card {border:1px solid var(--border); border-radius:var(--radius); padding:16px;}
+    table {width:100%; border-collapse: collapse;}
+    th, td {text-align:left; padding:10px; border-bottom:1px solid var(--border);}
+    th.sortable {cursor:pointer; user-select:none;}
+    .muted {color:var(--muted);}
+    .right {text-align:right;}
+    .x {cursor:pointer; font-weight:600;}
+    .pagination {display:flex; gap:8px; justify-content:flex-end; align-items:center; margin-top:12px;}
+    input[type="text"], input[type="tel"] {padding:10px; border:1px solid var(--border); border-radius:var(--radius); width:100%;}
+    select {padding:8px; border:1px solid var(--border); border-radius:var(--radius);}
+    .grid {display:grid; gap:var(--gap);}
+    .grid.cols-2 {grid-template-columns:1fr 1fr;}
+    .grid.cols-3 {grid-template-columns:1fr 1fr 1fr;}
+    dialog::backdrop {background: rgba(0,0,0,.35);}
+    dialog {border:none; border-radius:16px; width:min(640px, 92vw);}
+    .dialog-header {display:flex; justify-content:space-between; align-items:center; padding:8px 16px 0 16px;}
+    .dialog-body {padding:0 16px 16px 16px;}
+    .error { border-color:#ef4444 !important; outline-color:#ef4444 !important; }
+    .help { font-size:12px; color: var(--muted); margin-top:4px; }
+    .help.error { color:#ef4444; }
+  </style>
+</head>
+<body>
+  <div id="app" class="container"></div>
+
+  <dialog id="addDialog">
+    <div class="dialog-header">
+      <h3>Добавить организацию</h3>
+      <button class="btn" data-close>Закрыть</button>
+    </div>
+    <div class="dialog-body">
+      <div class="grid cols-2" style="margin-top:12px;">
+        <div>
+          <label class="muted" for="f-name">Название</label>
+          <input id="f-name" type="text" required />
+          <div class="help error" data-err="name" hidden>Укажите название</div>
+        </div>
+        <div>
+          <label class="muted" for="f-director">ФИО директора</label>
+          <input id="f-director" type="text" placeholder="Иванов И.И." required />
+          <div class="help error" data-err="director" hidden>Укажите ФИО</div>
+        </div>
+      </div>
+      <div class="grid cols-3" style="margin-top:12px;">
+        <div>
+          <label class="muted" for="f-city">Город</label>
+          <input id="f-city" type="text" required />
+          <div class="help error" data-err="city" hidden>Укажите город</div>
+        </div>
+        <div>
+          <label class="muted" for="f-street">Улица</label>
+          <input id="f-street" type="text" required />
+          <div class="help error" data-err="street" hidden>Укажите улицу</div>
+        </div>
+        <div>
+          <label class="muted" for="f-house">Дом</label>
+          <input id="f-house" type="text" required />
+          <div class="help error" data-err="house" hidden>Укажите дом</div>
+        </div>
+      </div>
+      <div class="grid" style="margin-top:12px;">
+        <div>
+          <label class="muted" for="f-phone">Номер телефона</label>
+          <input id="f-phone" type="tel" placeholder="+7 000 000 00 00" inputmode="tel" autocomplete="tel" required />
+          <div class="help" id="phone-help">Формат: +7 000 000 00 00</div>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px;">
+        <button class="btn" data-close>Отмена</button>
+        <button class="btn primary" id="f-ok" disabled>OK</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
